@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="tr" lang="tr">
+<head>
+	<title>c</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="testc.js"></script>
+	
+	
+	
+	</script>
+	
+	<style >
+	
+	#element {  
+    overflow: auto; /* overflow is needed */  
+    resize: both;  
+    background:#e1e1e1;
+    width:50px;
+    height:100px;
+    
+	}
+	
+	
+	input {
+	border:1px solid #222;
+	margin:2px 0 0 2px;
+		
+	}  
+	input:focus {
+	border-color:red;	
+	
+	}
+	.label {
+	width:80px;
+	border:1px solid #dedede;
+	background:#dedede;
+	display:inline-block;
+	padding:1px 0 0 3px;
+	}
+	</style>
+	
+</head>
+<body>
+
+<form>
+	<label class="label">İsim: </label><input type="text" name="a" value="" /><br />
+	<label class="label">Soyisim: </label><input type="text" name="b" value="" /><br />
+	<label class="label">İlgi Alanı: </label><input type="text" name="c" id="ilgi" value="a|>b"><br />
+	<label class="label">Eposta: </label><input type="text" name="d" value="" /><br />
+	<label class="label">Okul: </label><input type="text" name="e" id="okul" value="" /><br />
+</form>
+
+
+
+<script type="text/javascript">
+	var xxx=new XInputs();
+	xxx.createInputs(document.getElementById('ilgi'));
+	xxx.createInputs(document.getElementById('okul'));
+</script>
+
+<textarea rows="7" cols="20" style="resize: both; overflow-x: auto; overflow-y: auto; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px; margin-left: 2px; margin-right: 2px; width: 243px; margin-top: 2px; margin-bottom: 2px; height: 130px; "> </textarea>
+<div id="element"></div>
+<div style="overflow: hidden; width: 160px; height: 60px; resize: vertical; -moz-resize: vertical; border: solid 3px #dedede; background: #fff; border-radius: 10px; padding: 12px; position: absolute; bottom: 0;"><p> <span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text" style="direction: ltr; text-align: left">This rounded <code>&lt;div&gt;</code> can be resized vertically in a strange way</span> Bu yuvarlak <code>&lt;div&gt;</code> şekilde garip bir dikey olabilir boyutlandÃ</span> </p></div>
+<div style="overflow: hidden; width: 160px; height: 60px; resize: horizontal; -moz-resize: horizontal; border: solid 3px #dedede; background: #fff; border-radius: 10px; padding: 12px;"><p> <span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text" style="direction: ltr; text-align: left">This rounded <code>&lt;div&gt;</code> can be resized horizontally</span> Bu yuvarlak <code>&lt;div&gt;</code> yatay resized olabilir</span> </p></div>
+<div style="overflow: hidden; width: 160px; height: 60px; resize: vertical; -moz-resize: vertical; border: solid 3px #dedede; background: #fff; border-radius: 10px; padding: 12px; position: absolute; bottom: 0; -webkit-transform: rotate(-180deg); -moz-transform: rotate(-180deg); -o-transform: rotate(-180deg); -ms-transform: rotate(-180deg); -transform-transform: rotate(-180deg);"><p> <span onmouseover="_tipon(this)" onmouseout="_tipoff()"><span class="google-src-text" style="direction: ltr; text-align: left">Now the handle is in the right spot, but you can't read this</span> Şimdi kolu doğru yerde olduğunu, ancak bu okuyamaz</span> </p></div>
+</body>
+</html>
