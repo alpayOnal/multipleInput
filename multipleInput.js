@@ -1,24 +1,32 @@
-function XInputs(){
-	
-	
+/**
+ * @author Alpay Onal <alpayonal@gmail.com>
+ * */
+function multipleInput(){
+	this.delImg='img/common/minpDel.png';
+	this.delImg='img/common/minpDel.png';
+	this.baseInput;
 	this.separator='|>';
 	this.initialize();
 	
+	if(arguments.length>0)
+		this.createInputs(arguments[0]);
 }
 
-var _xip=XInputs.prototype;
+var _minpt=multipleInput.prototype;
 
-_xip.initialize=function(){
+_minpt.initialize=function(){
 	
-	XInp=this;
+	mInp=this;
 }
 
 	/**
 	 * ilk input oluşturluyor
 	 * 
 	 * */
-_xip.createInputs=function(inputObj){
-		
+_minpt.createInputs=function(inputObj){
+	
+	this.baseInput=inputObj;
+	
 	var mDiv = document.createElement('div');
 	mDiv.setAttribute('style','display:inline-block;');
 	inputObj.parentNode.insertBefore(mDiv, inputObj.nextSibling);
@@ -47,14 +55,14 @@ _xip.createInputs=function(inputObj){
 	mDiv.appendChild(defaultSpan);
 	
 	// var olan input içindeki  parse ediliyor.
-	if (inputObj.value.indexOf(XInp.separator)>0){
-		defaultValue=defaultValue.split(XInp.separator);
+	if (inputObj.value.indexOf(mInp.separator)>0){
+		defaultValue=defaultValue.split(mInp.separator);
 		
 		for (i=0;i<defaultValue.length;i++) 
-			XInp.createSubSI(mDiv,defaultValue[i]);	
+			mInp.createSubSI(mDiv,defaultValue[i]);	
 			
 			
-	}else if (defaultValue.length>0) XInp.createSubSI(mDiv,defaultValue);
+	}else if (defaultValue.length>0) mInp.createSubSI(mDiv,defaultValue);
 	
 
 	// var olan input kaldırılıyor
@@ -62,8 +70,8 @@ _xip.createInputs=function(inputObj){
 	formParent.removeChild(inputObj);
 	
 	var obj=null;
-	XInp.createSubSI(mDiv,'',true);
-	XInp.createResetSpan(mDiv);	
+	mInp.createSubSI(mDiv,'',true);
+	mInp.createResetSpan(mDiv);	
 }	
 	
 	/**
@@ -75,7 +83,7 @@ _xip.createInputs=function(inputObj){
 	* 			verilmeyeceğini kontrol ediyor.
 	* 
 	* */
-_xip.createSubSI=function(obj,Objvalue,lastSpan) {
+_minpt.createSubSI=function(obj,Objvalue,lastSpan) {
 	
 	var divParent=obj.parentNode.parentNode;
 				
@@ -87,11 +95,11 @@ _xip.createSubSI=function(obj,Objvalue,lastSpan) {
 	var sInput= document.createElement('input');
 	sInput.setAttribute('type','text');
 	sInput.setAttribute('value',Objvalue);
-	sInput.setAttribute('onMouseOver','XInp.mMouseOver(this)');
-	sInput.setAttribute('onMouseOut','XInp.mMouseOut(this)');
-	sInput.setAttribute('onDblClick','XInp.mDblClick(this)');
-	sInput.setAttribute('onKeyUp','XInp.mKeyup(this)');	
-	
+	sInput.setAttribute('onMouseOver','mInp.mMouseOver(this)');
+	sInput.setAttribute('onMouseOut','mInp.mMouseOut(this)');
+	sInput.setAttribute('onDblClick','mInp.mDblClick(this)');
+	sInput.setAttribute('onKeyUp','mInp.mKeyup(this)');	
+	sInput.setAttribute('class',this.baseInput.getAttribute('class'));
 	sSpan.appendChild(sInput);
 	
 	if (obj.tagName=='DIV') obj.appendChild(sSpan);
@@ -105,30 +113,29 @@ _xip.createSubSI=function(obj,Objvalue,lastSpan) {
 	* son inputda tuşa basıldığında yeni span ve input oluşturuluyor.
 	* 
 	* */
-_xip.mKeyup=function(obj){
+_minpt.mKeyup=function(obj){
 	
 	if (obj.parentNode.getAttribute('class')=='cLastItem'){
 		if (obj.value!=''){
-			XInp.createSubSI(obj,'');
+			mInp.createSubSI(obj,'');
 			obj.parentNode.removeAttribute('class');
 		}
 	}
 	
-	XInp.createResetSpan(obj);
-	XInp.inputsJoin(obj);
+	mInp.createResetSpan(obj);
+	mInp.inputsJoin(obj);
 }
 
 	/**
 	* mouse input üzerine gelindiğinde sil iconu çıkıyor
 	* 
 	* */
-_xip.mMouseOver=function(obj){
+_minpt.mMouseOver=function(obj){
 	
 	if (obj.parentNode.childNodes[1]==null)	{
 		var sDelSpan = document.createElement('span');
-		sDelSpan.setAttribute('style','background:url("delete.png")\
-1px top no-repeat;width:11px;height:14px;padding-left:0;margin:0;display:inline-block;cursor:pointer;');
-		sDelSpan.setAttribute('onmousedown','XInp.mDblClick(this)');
+		sDelSpan.setAttribute('class','minptDelSpan');
+		sDelSpan.setAttribute('onmousedown','mInp.mDblClick(this)');
 		obj.parentNode.appendChild(sDelSpan);
 	}
 }
@@ -137,7 +144,7 @@ _xip.mMouseOver=function(obj){
 	* mouse input üzerine ayrıldığına sil iconu kaldırılıyor
 	* 
 	* */
-_xip.mMouseOut=function(obj){
+_minpt.mMouseOut=function(obj){
 	var sDelSpan=obj.parentNode.childNodes[1];
 	obj.parentNode.removeChild(sDelSpan);
 }
@@ -147,7 +154,7 @@ _xip.mMouseOut=function(obj){
 	 * siliniyor
 	 * 
 	 * */
-_xip.mDblClick=function(obj){
+_minpt.mDblClick=function(obj){
 	
 	var divParent=obj.parentNode.parentNode;
 	
@@ -160,13 +167,13 @@ _xip.mDblClick=function(obj){
 			if (inputs[inputs.length-2].parentNode.getAttribute('class')==null){
 				inputs[inputs.length-2].parentNode.setAttribute('class','cLastItem');
 				obj.value='';
-				XInp.inputsJoin(obj);	
+				mInp.inputsJoin(obj);	
 				divParent.removeChild(obj.parentNode);
 			}else alert("En az birtane giriş alanı kalmalıdır !");			
 		}
 		else {
 		obj.value='';
-		XInp.inputsJoin(obj);	
+		mInp.inputsJoin(obj);	
 		divParent.removeChild(obj.parentNode);	
 		}
 	}else alert("En az birtane giriş alanı kalmalıdır !");
@@ -177,7 +184,7 @@ _xip.mDblClick=function(obj){
 	 * div içindeki tüm inputlardaki değerler birleştiriliyor 
 	 * 
 	 * */
-_xip.inputsJoin=function(obj) {
+_minpt.inputsJoin=function(obj) {
 
 	var divParent=obj.parentNode.parentNode;
 	var inputs=divParent.getElementsByTagName('input');
@@ -196,28 +203,29 @@ _xip.inputsJoin=function(obj) {
 	 * inputların sonunda resetleme ikonu oluşturuluyor.
 	 * 
 	 * */
-_xip.createResetSpan=function (obj){
+_minpt.createResetSpan=function (obj){
 	
 	if (obj.tagName!='DIV') var divParent=obj.parentNode.parentNode;
 	else var divParent=obj;
 	
 		var spans=divParent.getElementsByTagName('span');
 		for (i=0;i<spans.length;i++)
-			if(divParent.childNodes[i].getAttribute('class')=='xResetSpan')
+			if(divParent.childNodes[i].getAttribute('class')=='minptResetSpan')
 				{divParent.removeChild(divParent.childNodes[i]);break;}
 	
 	var sResetSpan = document.createElement('span');
 	sResetSpan.setAttribute('class','xResetSpan');
 	sResetSpan.setAttribute('title','başlangıç değerine geridön');
-	sResetSpan.setAttribute('onMouseDown','XInp.resetSpanClick(this)');
-	sResetSpan.setAttribute('style','background:url("reset.png")\
-no-repeat;width:16px;height:16px;padding:0;margin:0 0 0 5px;display:inline-block;cursor:pointer');
+	sResetSpan.setAttribute('onMouseDown','mInp.resetSpanClick(this)');
+	sResetSpan.setAttribute('class','minptResetSpan');
+	
+	
 	
 	divParent.appendChild(sResetSpan);	
 	
 }
 
-_xip.resetSpanClick=function (obj){
+_minpt.resetSpanClick=function (obj){
 	var divParent=obj.parentNode;
 	var spans=divParent.getElementsByTagName('span');
 	var slength=spans.length;
@@ -228,25 +236,25 @@ _xip.resetSpanClick=function (obj){
 	}
 	
 	var inputs=divParent.getElementsByTagName('input');		
-	inputs[0].setAttribute("value",XInp.htmlEntityDecode(spans[1].innerHTML));
+	inputs[0].setAttribute("value",mInp.htmlEntityDecode(spans[1].innerHTML));
 	defaultValue=inputs[0].value;
 	
 	//  input içindeki değer parse ediliyor.
-	if (inputs[0].value.indexOf(XInp.separator)>0){
-		defaultValue=defaultValue.split(XInp.separator);
+	if (inputs[0].value.indexOf(mInp.separator)>0){
+		defaultValue=defaultValue.split(mInp.separator);
 		
 		for (i=0;i<defaultValue.length;i++) 
-			XInp.createSubSI(divParent,defaultValue[i]);	
+			mInp.createSubSI(divParent,defaultValue[i]);	
 			
 			
-	}else if (defaultValue.length>0) XInp.createSubSI(divParent,defaultValue);
+	}else if (defaultValue.length>0) mInp.createSubSI(divParent,defaultValue);
 	defaultValue='';
-	XInp.createSubSI(divParent,defaultValue,true);
-	XInp.createResetSpan(divParent);	
+	mInp.createSubSI(divParent,defaultValue,true);
+	mInp.createResetSpan(divParent);	
 	
 }
 
-_xip.htmlEntityDecode=function(str){
+_minpt.htmlEntityDecode=function(str){
 
 	var  tarea=document.createElement('textarea');
 	tarea.innerHTML = str; return tarea.value;
