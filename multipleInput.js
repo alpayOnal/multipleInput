@@ -157,7 +157,7 @@
 			if (!visible) visible=false;
 			var sDelSpan=obj.parentNode.childNodes[1];
 			var f=function(){obj.parentNode.removeChild(sDelSpan);}
-			 setTimeout(f, 900);
+			 setTimeout(f, 1000);
 				
 		},
 		/**
@@ -264,13 +264,6 @@
 			var  tarea=document.createElement('textarea');
 			tarea.innerHTML = str; return tarea.value;
 			tarea.parentNode.removeChild(tarea);
-		},
-		wait:function(func,time) {
-			time = time || 500;
-			var func;
-			var t=setTimeout(func,time);
-			return t;
-			
 		}	
 	}
 	
