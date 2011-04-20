@@ -142,7 +142,9 @@
 			if (obj.parentNode.childNodes[1]==null)	{
 				var sDelSpan = document.createElement('span');
 				sDelSpan.setAttribute('class','minptDelSpan');
-				sDelSpan.setAttribute('onmousedown','mInp.mDblClick(this)');
+				$(sDelSpan).mousedown(function(){ 
+					mInp.mDblClick(this)
+				});
 				obj.parentNode.appendChild(sDelSpan);
 			}
 		},
@@ -150,10 +152,13 @@
 		* mouse input üzerine ayrıldığına sil iconu kaldırılıyor
 		* 
 		* */
-		mMouseOut:function(obj){
+		mMouseOut:function(obj,visible){
 			var mInp=this;
+			if (!visible) visible=false;
 			var sDelSpan=obj.parentNode.childNodes[1];
-			obj.parentNode.removeChild(sDelSpan);
+			var f=function(){obj.parentNode.removeChild(sDelSpan);}
+			 setTimeout(f, 900);
+				
 		},
 		/**
 		 * inputlara çift tıklama olayı kontrol ediliyor.çift tıkladığında
@@ -259,6 +264,13 @@
 			var  tarea=document.createElement('textarea');
 			tarea.innerHTML = str; return tarea.value;
 			tarea.parentNode.removeChild(tarea);
+		},
+		wait:function(func,time) {
+			time = time || 500;
+			var func;
+			var t=setTimeout(func,time);
+			return t;
+			
 		}	
 	}
 	
