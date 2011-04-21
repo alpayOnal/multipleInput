@@ -101,7 +101,7 @@
 			var sInput= document.createElement('input');
 			sInput.setAttribute('type','text');
 			sInput.setAttribute('value',Objvalue);
-			$(sInput).css('display','inline-block');
+			
 			$(sInput).dblclick(function(){ 
 				mInp.mDblClick(this)
 			}).keyup(function(){ 
