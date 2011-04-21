@@ -3,7 +3,7 @@
 	function multipleInput(inputObj,options) {
 		
 		this.baseInput=$(inputObj);
-		this.defaultvalue=$(inputObj).attr('value');
+		this.defaultvalue=$(inputObj).val();
 		if (options) 
 			this.separator=options.separator;
 		else
@@ -93,18 +93,19 @@
 			if (obj.tagName!='DIV'  || lastSpan==true)
 				sSpan.setAttribute('class','cLastItem');
 			
+			$(sSpan).hover(
+				function() { mInp.mMouseOver(this);},
+				function() { mInp.mMouseOut(this); }
+			);
+			
 			var sInput= document.createElement('input');
 			sInput.setAttribute('type','text');
 			sInput.setAttribute('value',Objvalue);
-				
-			$(sInput).mouseout(function(){ 
-				mInp.mMouseOut(this)
-			}).dblclick(function(){ 
+			$(sInput).css('display','inline-block');
+			$(sInput).dblclick(function(){ 
 				mInp.mDblClick(this)
 			}).keyup(function(){ 
 				mInp.mKeyup(this)
-			}).mouseover(function(){ 
-				mInp.mMouseOver(this);
 			});
 			
 			$(sInput).attr('class',$(this.baseInput).attr('class'))
@@ -139,26 +140,24 @@
 		* */
 		mMouseOver:function(obj){
 			var mInp=this;
-			if (obj.parentNode.childNodes[1]==null)	{
+			//alert($(obj).attr('class'));
+			if (obj.childNodes[1]==null)	{
 				var sDelSpan = document.createElement('span');
 				sDelSpan.setAttribute('class','minptDelSpan');
 				$(sDelSpan).mousedown(function(){ 
 					mInp.mDblClick(this)
 				});
-				obj.parentNode.appendChild(sDelSpan);
+				obj.appendChild(sDelSpan);
 			}
 		},
 		/**
 		* mouse input üzerine ayrıldığına sil iconu kaldırılıyor
 		* 
 		* */
-		mMouseOut:function(obj,visible){
+		mMouseOut:function(obj){
 			var mInp=this;
-			if (!visible) visible=false;
-			var sDelSpan=obj.parentNode.childNodes[1];
-			var f=function(){obj.parentNode.removeChild(sDelSpan);}
-			 setTimeout(f, 1000);
-				
+			var sDelSpan=obj.childNodes[1];
+			obj.removeChild(sDelSpan);
 		},
 		/**
 		 * inputlara çift tıklama olayı kontrol ediliyor.çift tıkladığında
